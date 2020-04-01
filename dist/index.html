@@ -7,19 +7,21 @@
   <title>Document</title>
 </head>
 <body>
-  
+  <div id="app"></div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.9/dist/vue.js"></script>
 <script src="./bombay.js"></script>
 <script>
   new Bombay({
     token: 'wNrNHkH1585620953820',
-    reportUrl: 'http://127.0.0.1:7002/api/v1/report/web'
+    reportUrl: 'http://127.0.0.1:7002/api/v1/report/web',
+    Vue: Vue
   })
 </script>
 <script>
-  let a = 3
-  a.map(item => {
-    console.log(item)
+  const instance = new Vue({
+    el: "#app",
+    template: '<div>{{ hi }}</div>'
   })
 </script>
 </html>

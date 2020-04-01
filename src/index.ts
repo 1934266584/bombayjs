@@ -1,24 +1,47 @@
-import { Config, setConfig } from './config'
-import { handleErr, handlePv, handlePerf, handleHashchange, handleHistorystatechange, handleClick, handleBlur, handleResource, handleSum, handleAvg, handleMsg, handleHealth, handleApi,setPage, listenMessageListener, listenCircleListener, removeCircleListener, } from './handlers'
-import {on,off,parseHash} from './utils/tools'
-import { hackState, hackConsole, hackhook, } from './hack'
-import { setGlobalPage, setGlobalSid, setGlobalHealth, GlobalVal, } from './config/global'
+import { Config, setConfig } from './config';
+import {
+  handleErr,
+  handleVueErr,
+  handlePv,
+  handlePerf,
+  handleHashchange,
+  handleHistorystatechange,
+  handleClick,
+  handleBlur,
+  handleResource,
+  handleSum,
+  handleAvg,
+  handleMsg,
+  handleHealth,
+  handleApi,
+  setPage,
+  listenMessageListener,
+  listenCircleListener,
+  removeCircleListener,
+} from './handlers';
+import { on, off, parseHash } from './utils/tools';
+import { hackState, hackConsole, hackhook } from './hack';
+import { setGlobalPage, setGlobalSid, setGlobalHealth, GlobalVal } from './config/global';
 
 export default class Bombay {
-
   constructor(options, fn) {
-    this.init(options)
+    this.init(options);
   }
 
-  init(options) {
+  init({ Vue, ...options }) {
     // 没有token,则不监听任何事件
     if (options && !options.token) {
-      console.warn('请输入一个token')
-      return
+      console.warn('请输入一个token');
+      return;
     }
-    setConfig(options)
-    let page = Config.enableSPA ? parseHash(location.hash.toLowerCase()) : location.pathname.toLowerCase()
-    setPage(page, true)
+
+    Vue && this.addListenVueError(Vue);
+
+    setConfig(options);
+    let page = Config.enableSPA
+      ? parseHash(location.hash.toLowerCase())
+      : location.pathname.toLowerCase();
+    setPage(page, true);
 
     Config.isPage && this.sendPerf();
 
@@ -27,26 +50,26 @@ export default class Bombay {
     Config.isAjax && this.addListenAjax();
     Config.isRecord && this.addRrweb();
     // 行为是一个页面内的操作
-    Config.isBehavior && this.addListenBehavior()
-    Config.isResource && this.sendResource()
+    Config.isBehavior && this.addListenBehavior();
+    Config.isResource && this.sendResource();
     // 绑定全局变量
-    window.__bb = this
-    this.addListenUnload()
-    
+    window.__bb = this;
+    this.addListenUnload();
+
     // 监听message
-    listenMessageListener()
+    listenMessageListener();
     if (GlobalVal.circle) {
-      listenCircleListener()
+      listenCircleListener();
     }
   }
 
   sendPerf() {
-    handlePerf()
+    handlePerf();
   }
 
   // 发送资源
   sendResource() {
-    'complete' === window.document.readyState ? handleResource() : this.addListenResource()
+    'complete' === window.document.readyState ? handleResource() : this.addListenResource();
   }
 
   // 监听资源
@@ -56,8 +79,8 @@ export default class Bombay {
 
   // 监听行为
   addListenBehavior() {
-    hackConsole()
-    Config.behavior.click && this.addListenClick()
+    hackConsole();
+    Config.behavior.click && this.addListenClick();
   }
 
   // 监听click
@@ -68,44 +91,48 @@ export default class Bombay {
 
   // 监听路由
   addListenRouterChange() {
-    hackState('pushState')
-    hackState('replaceState')
-    on('hashchange', handleHashchange)
-    on('historystatechanged', handleHistorystatechange)
+    hackState('pushState');
+    hackState('replaceState');
+    on('hashchange', handleHashchange);
+    on('historystatechanged', handleHistorystatechange);
+  }
+
+  addListenVueError(Vue) {
+    Vue.config.errorHandler = function(error, vm, info) {
+      console.error(error);
+      handleVueErr(error, vm, info);
+    };
   }
 
   addListenJs() {
     // js错误或静态资源加载错误
-    on('error', handleErr)
+    on('error', handleErr);
     //promise错误
-    on('unhandledrejection', handleErr)
+    on('unhandledrejection', handleErr);
     // window.addEventListener('rejectionhandled', rejectionhandled, true);
-    
   }
 
   addListenAjax() {
-    hackhook()
+    hackhook();
   }
 
   // beforeunload
   addListenUnload() {
-    on('beforeunload', handleHealth)
-    this.destroy()
+    on('beforeunload', handleHealth);
+    this.destroy();
   }
 
-  addRrweb() {
-
-  }
+  addRrweb() {}
 
   // 移除路由
   removeListenRouterChange() {
-    off('hashchange', handleHashchange)
-    off('historystatechanged', handleHistorystatechange)
+    off('hashchange', handleHashchange);
+    off('historystatechanged', handleHistorystatechange);
   }
 
   removeListenJs() {
-    off('error', handleErr)
-    off('unhandledrejection', handleErr)
+    off('error', handleErr);
+    off('unhandledrejection', handleErr);
   }
 
   // 监听资源
@@ -113,40 +140,36 @@ export default class Bombay {
     off('beforeunload', handleHealth);
   }
 
-  removeListenAjax() {
-
-  }
+  removeListenAjax() {}
 
   removeListenUnload() {
     off('load', handleResource);
   }
 
-  removeRrweb() {
-
-  }
+  removeRrweb() {}
 
   sum(key: string, val: number) {
-    handleSum(key, val)
+    handleSum(key, val);
   }
 
   avg(key: string, val: number) {
-    handleAvg(key, val)
+    handleAvg(key, val);
   }
 
   msg(key: string) {
-    handleMsg(key)
+    handleMsg(key);
   }
 
   api(api, success, time, code, msg) {
-    handleApi(api, success, time, code, msg, Date.now())
+    handleApi(api, success, time, code, msg, Date.now());
   }
 
   destroy() {
     Config.enableSPA && this.removeListenRouterChange();
-    Config.isError && this.removeListenJs()
-    Config.isAjax && this.removeListenAjax()
-    Config.isRecord && this.removeRrweb()
-    Config.isResource && this.removeListenResource()
-    this.removeListenResource()
+    Config.isError && this.removeListenJs();
+    Config.isAjax && this.removeListenAjax();
+    Config.isRecord && this.removeRrweb();
+    Config.isResource && this.removeListenResource();
+    this.removeListenResource();
   }
 }
