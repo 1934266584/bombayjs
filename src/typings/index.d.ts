@@ -52,7 +52,7 @@ interface CommonMsg {
   ct: string; // 网络
   ul: string; // 语言
   o: string; // 原始url
-  user: any; // 当前用户
+  user: Object; // 当前用户
 }
 
 // pv上报
