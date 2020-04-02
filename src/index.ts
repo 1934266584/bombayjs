@@ -35,6 +35,7 @@ export default class Bombay {
       return;
     }
 
+    // 监听Vue的错误
     Vue && this.addListenVueError(Vue);
 
     setConfig(options);
@@ -61,6 +62,14 @@ export default class Bombay {
     if (GlobalVal.circle) {
       listenCircleListener();
     }
+  }
+
+  // 只支持更改用户的信息, 当获取到用户信息后，传入
+  setUserInfo(userInfo) {
+    const config = {
+      user: userInfo,
+    };
+    setConfig(config);
   }
 
   sendPerf() {

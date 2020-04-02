@@ -37,16 +37,20 @@ export let Config = {
   },
   // 最长上报数据长度
   maxLength: 1000,
-}
+  // 是否有Vue传入
+  Vue: '',
+  // 用户信息
+  user: {},
+};
 
 // 设置参数
 export function setConfig(options) {
   Config = {
     ...Config,
-      ...options
-  }
+    ...options,
+  };
 }
 
 export function getConfig(e: string) {
-  return e ? Config[e] ? Config[e] : {} : {}
+  return e ? (Config[e] ? Config[e] : {}) : {};
 }
