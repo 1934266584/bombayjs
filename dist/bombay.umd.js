@@ -84,6 +84,10 @@
     },
     // 最长上报数据长度
     maxLength: 1000,
+    // 是否有Vue传入
+    Vue: '',
+    // 用户信息
+    user: {},
   };
   // 设置参数
   function setConfig(options) {
@@ -277,6 +281,7 @@
       ul: getLang(),
       _v: '{{VERSION}}',
       o: location.href,
+      user: Config.user,
     };
     return data;
   }
@@ -538,7 +543,7 @@
         fpt: 0,
         tti: 0,
         ready: 0,
-        load: 0, // domready时间
+        load: 0,
       },
       timing = performance.timing || {},
       now = Date.now(),
@@ -656,7 +661,7 @@
     var ret = __assign(__assign(__assign({}, commonMsg), GlobalVal._health), {
       t: 'health',
       healthy: healthy,
-      stay: Date.now() - GlobalVal.sBegin, // 停留时间
+      stay: Date.now() - GlobalVal.sBegin,
     });
     resetGlobalHealth();
     report(ret);
@@ -704,7 +709,7 @@
       detail: i && i.substring(0, 1e3),
       file: error.filename || '',
       line: error.lineno || '',
-      col: error.colno || '', // 列
+      col: error.colno || '',
     });
     report(msg);
   }
@@ -814,7 +819,7 @@
       success: success,
       time: time,
       code: code,
-      msg: msg, // 信息
+      msg: msg,
     });
     // 过滤忽略的url
     var include = findIndex(getConfig('ignore').ignoreApis, function(ignoreApi) {
@@ -1105,6 +1110,7 @@
         console.warn('请输入一个token');
         return;
       }
+      // 监听Vue的错误
       Vue && this.addListenVueError(Vue);
       setConfig(options);
       var page = Config.enableSPA
@@ -1127,6 +1133,13 @@
       if (GlobalVal.circle) {
         listenCircleListener();
       }
+    };
+    // 只支持更改用户的信息, 当获取到用户信息后，传入
+    Bombay.prototype.setUserInfo = function(userInfo) {
+      var config = {
+        user: userInfo,
+      };
+      setConfig(config);
     };
     Bombay.prototype.sendPerf = function() {
       handlePerf();

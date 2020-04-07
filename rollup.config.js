@@ -29,10 +29,15 @@ const builds = {
     format: 'umd',
     mode: 'production',
   },
-  es: {
-    outFile: 'vue-pugin-api.module.js',
+  'es-dev': {
+    outFile: 'bombay.module.js',
     format: 'es',
     mode: 'development',
+  },
+  'es-prod': {
+    outFile: 'bombay.module.js',
+    format: 'es',
+    mode: 'production',
   },
 };
 
