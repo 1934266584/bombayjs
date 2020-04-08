@@ -57,9 +57,8 @@ function getConfig({ outFile, format, mode }) {
         vue: 'Vue',
       },
       exports: 'named',
-      name: format === 'umd' ? 'vuePluginsApi' : undefined,
+      name: format === 'umd' ? 'bombay' : undefined,
     },
-    external: ['vue'],
     plugins: [
       useTypescript &&
         typescript({
