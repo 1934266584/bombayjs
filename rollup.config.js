@@ -35,7 +35,7 @@ const builds = {
     mode: 'development',
   },
   'es-prod': {
-    outFile: 'bombay.module.js',
+    outFile: 'bombay.module.min.js',
     format: 'es',
     mode: 'production',
   },
