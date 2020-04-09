@@ -29,6 +29,7 @@ export let Config = {
   ignore: {
     ignoreErrors: [],
     ignoreUrls: [],
+    ignorePvs: ['404'],
     ignoreApis: ['/api/v1/report/web', 'livereload.js?snipver=1', '/sockjs-node/info'],
   },
   behavior: {

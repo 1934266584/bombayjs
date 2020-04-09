@@ -78,7 +78,7 @@ let buildConfig;
 
 // 如果指定了打包环境就打对应的包 不然就打全量的包
 if (process.env.TARGET) {
-  buildConfig = genConfig(builds[process.env.TARGET]);
+  buildConfig = getConfig(builds[process.env.TARGET]);
 } else {
   buildConfig = getAllBuilds();
 }

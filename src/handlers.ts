@@ -29,6 +29,9 @@ const CIRCLESTYLEID = 'bombayjs-circle-css'; // 插入的style标签id
 export function handlePv(): void {
   if (!Config.autoSendPv) return;
   let commonMsg = getCommonMsg();
+  if (Config.ignore.ignorePvs.includes(commonMsg.page)) {
+    return;
+  }
   let msg: pvMsg = {
     ...commonMsg,
     ...{
