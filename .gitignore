@@ -11,3 +11,4 @@ test/**/node_modules/
 tests/data/
 package-lock.json
 npm-debug.log
+dist/
