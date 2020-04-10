@@ -379,6 +379,10 @@ export function handleVueErr(error, vm, info): void {
 
 // 处理错误
 export function handleErr(error): void {
+  if (Config.ignore.ignoreErrors.includes(error.type)) {
+    return;
+  }
+
   switch (error.type) {
     case 'error':
       error instanceof ErrorEvent ? reportCaughtError(error) : reportResourceError(error);

@@ -63,6 +63,8 @@ new Bombay({
   token: '',
   // app版本
   appVersion: '1.0.0',
+  // Vue的类
+  Vue: '',
   // 环境
   environment: 'production',
   // 脚本延迟上报时间
@@ -86,6 +88,7 @@ new Bombay({
   ignore: {
     ignoreErrors: [],
     ignoreUrls: [],
+    ignorePvs: ['404'],
     ignoreApis: ['/api/v1/report/web', 'livereload.js?snipver=1', '/sockjs-node/info'],
   },
   behavior: {
@@ -94,6 +97,8 @@ new Bombay({
   },
   // 最长上报数据长度
   maxLength: 1000,
+  // 当前用户信息
+  user: {}
 }
 
 ```
