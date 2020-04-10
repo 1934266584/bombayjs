@@ -1,24 +1,30 @@
 {
   "name": "@zvalley/bombay",
-  "version": "0.1.0",
-  "description": "Provide some plugins for Vue",
+  "version": "0.1.2",
+  "description": "a frontend-tracker plugin,not base on any framework",
   "keywords": [
-    "vue",
-    "vue-plugins"
+    "error",
+    "pv",
+    "perf",
+    "behavior",
+    "frontend-tracker"
   ],
   "main": "dist/bombay.js",
   "umd:main": "dist/bombay.umd.js",
   "module": "dist/bombay.module.js",
   "typings": "dist/index.d.ts",
   "author": {
-    "name": "xiaojing",
-    "email": "1934266584@qq.com"
+    "name": "liu yunlin, xiaojing"
   },
   "license": "MIT",
   "sideEffects": false,
   "files": [
     "dist/"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:122687220/bombayjs.git"
+  },
   "scripts": {
     "start": "cross-env TARGET=es-dev rollup -c -w",
     "build": "rollup -c",
