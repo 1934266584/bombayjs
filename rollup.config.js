@@ -63,7 +63,7 @@ function getConfig({ outFile, format, mode }) {
       useTypescript &&
         typescript({
           typescript: require('typescript'),
-          check: false,
+          check: true,
         }),
       resolve(),
       replace({

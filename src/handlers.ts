@@ -223,10 +223,12 @@ export function handlePerf(): void {
     now = Date.now(),
     type = 1;
   let stateCheck = setInterval(() => {
+    // @ts-ignore
     if (timing.loadEventEnd) {
       clearInterval(stateCheck);
 
       // 根据PerformanceNavigationTiming计算更准确
+      // @ts-ignore
       if ('function' == typeof window.PerformanceNavigationTiming) {
         var c = performance.getEntriesByType('navigation')[0];
         c && ((timing = c), (type = 2));
@@ -492,6 +494,7 @@ export function handleResource() {
   };
   var i = performance.timing || {},
     o = performance.getEntriesByType('resource') || [];
+  // @ts-ignore
   if ('function' == typeof window.PerformanceNavigationTiming) {
     var s = performance.getEntriesByType('navigation')[0];
     s && (i = s);
