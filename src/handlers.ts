@@ -425,6 +425,9 @@ function reportCaughtError(error: any): void {
 function reportResourceError(error: any): void {
   let commonMsg = getCommonMsg();
   let target = error.target;
+  if (Config.ignore.ignoreResources.some(api => target.src.includes(api))) {
+    return;
+  }
   let msg: ErrorMsg = {
     ...commonMsg,
     ...{

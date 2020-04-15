@@ -86,6 +86,8 @@ new Bombay({
     ignoreErrors: [],
     ignoreUrls: [],
     ignorePvs: ['404'],
+    // 忽略资源请求
+    ignoreResources: [],
     ignoreApis: ['/api/v1/report/web', 'livereload.js?snipver=1', '/sockjs-node/info'],
   },
   behavior: {

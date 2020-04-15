@@ -1,6 +1,6 @@
 {
   "name": "@zvalley/bombay",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "前端错误、性能、行为、PV采集库，不依赖于任何框架",
   "keywords": [
     "error",
