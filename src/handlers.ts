@@ -329,6 +329,9 @@ export function handleNavigation(page): void {
 }
 
 export function setPage(page, isFirst?: boolean) {
+  if (!isFirst && GlobalVal.page === page && GlobalVal.sBegin > Date.now() - 100) {
+    return;
+  }
   !isFirst && handleHealth();
   handleNavigation(page);
   if (isInIframe) {
