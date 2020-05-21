@@ -17,12 +17,18 @@ export function getCommonMsg() {
     sr: screen.width + 'x' + screen.height,
     vp: getScreen(),
     ct: u ? u.effectiveType : '',
+    device: getDeviceInfo(),
     ul: getLang(),
     _v: '{{VERSION}}',
     o: location.href,
     user: Config.user,
   };
   return data;
+}
+
+// 获取当前设备相关信息
+function getDeviceInfo(): string {
+  return navigator.appVersion;
 }
 
 // 获取页面

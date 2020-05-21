@@ -43,6 +43,7 @@ interface CommonMsg {
   v: string; // 版本
   e: string; // 开发生产环境
   token: string; // 项目id
+  device: string; // 运行环境平台的信息;
   begin: number; // 开始时间戳
   sr: string; // 屏幕分辨率
   vp: string; // view 分辨率
@@ -153,6 +154,8 @@ interface eventBehavior {
   data: {
     path: string;
     message: string;
+    pageX: number;
+    pageY: number;
   };
 }
 

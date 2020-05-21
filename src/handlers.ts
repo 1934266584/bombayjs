@@ -120,6 +120,8 @@ export function handleClick(event) {
       type: 'ui.click',
       data: {
         path: getElmPath(target),
+        pageX: event.pageX,
+        pageY: event.pageY,
         message: '',
       },
     };
@@ -146,26 +148,26 @@ export function handleBlur(event) {
   }
   if (target.nodeName !== 'INPUT' && target.nodeName !== 'TEXTAREA') return;
 
-  if (0 !== target.length) {
-    var behavior: eventBehavior = {
-      type: 'ui.blur',
-      data: {
-        path: getElmPath(target),
-        message: target.value,
-      },
-    };
-    // 空信息不上报
-    if (!behavior.data.path || !behavior.data.message) return;
-    let commonMsg = getCommonMsg();
-    let msg: behaviorMsg = {
-      ...commonMsg,
-      ...{
-        t: 'behavior',
-        behavior,
-      },
-    };
-    report(msg);
-  }
+  var behavior: eventBehavior = {
+    type: 'ui.blur',
+    data: {
+      path: getElmPath(target),
+      pageX: event.pageX,
+      pageY: event.pageY,
+      message: target.value,
+    },
+  };
+  // 空信息不上报
+  if (!behavior.data.path || !behavior.data.message) return;
+  let commonMsg = getCommonMsg();
+  let msg: behaviorMsg = {
+    ...commonMsg,
+    ...{
+      t: 'behavior',
+      behavior,
+    },
+  };
+  report(msg);
 }
 
 export function handleBehavior(behavior: Behavior): void {
@@ -288,6 +290,7 @@ export function handlePerf(): void {
         ...commonMsg,
         t: 'perf',
         ...data,
+        ...timing,
       };
       report(msg);
     }
