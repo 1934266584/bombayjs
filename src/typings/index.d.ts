@@ -20,7 +20,8 @@ type ReportData =
   | sumMsg
   | avgMsg
   | percentMsg
-  | msgMsg;
+  | msgMsg
+  | durationMsg;
 
 type MsgType =
   | ''
@@ -34,12 +35,14 @@ type MsgType =
   | 'sum'
   | 'avg'
   | 'percent'
-  | 'msg';
+  | 'msg'
+  | 'duration';
 
 interface CommonMsg {
   t: MsgType; // 类型
   times?: number; // 次数
   page: string; // 页面
+  hash: string; // 页面的hash值
   v: string; // 版本
   e: string; // 开发生产环境
   token: string; // 项目id
@@ -53,7 +56,15 @@ interface CommonMsg {
   ct: string; // 网络
   ul: string; // 语言
   o: string; // 原始url
-  user: Object; // 当前用户
+  deviceBrowser: string; //设备的浏览器类型
+  deviceModel: string; // 设备的品牌相关
+  deviceEngine: string; // 设备的浏览器引擎
+  deviceOs: string; // 设备的操作系统
+  user: string; // 当前用户
+}
+// 时长切片上传
+interface durationMsg extends CommonMsg {
+  duration_ms: number;
 }
 
 // pv上报

@@ -1,12 +1,18 @@
 import { Config } from '../config';
 import { randomString, parseHash } from './tools';
 import { GlobalVal } from '../config/global';
+import { version } from '../../package.json';
+import UA from 'ua-device';
 
 export function getCommonMsg() {
+  const device = getDeviceString();
+
+  const deviceInfo = getDeviceInfo();
   let u = (navigator as any).connection;
   let data: CommonMsg = {
     t: '',
     page: getPage(),
+    hash: getHash(),
     times: 1,
     v: Config.appVersion,
     token: Config.token,
@@ -17,18 +23,30 @@ export function getCommonMsg() {
     sr: screen.width + 'x' + screen.height,
     vp: getScreen(),
     ct: u ? u.effectiveType : '',
-    device: getDeviceInfo(),
+    device,
     ul: getLang(),
-    _v: '{{VERSION}}',
+    _v: `${version}`,
     o: location.href,
-    user: Config.user,
+    deviceBrowser: JSON.stringify(deviceInfo.browser || {}),
+    deviceModel: JSON.stringify(deviceInfo.device || {}),
+    deviceEngine: JSON.stringify(deviceInfo.deviceEngine || {}),
+    deviceOs: JSON.stringify(deviceInfo.os || {}),
+    user: JSON.stringify(Config.user),
   };
   return data;
 }
 
+function getHash(): string {
+  return location.hash;
+}
+
 // 获取当前设备相关信息
-function getDeviceInfo(): string {
-  return navigator.appVersion;
+function getDeviceString(): string {
+  return navigator.userAgent;
+}
+
+function getDeviceInfo(): any {
+  return new UA(window.navigator.userAgent) || {};
 }
 
 // 获取页面
@@ -48,18 +66,6 @@ function getUid(): string {
   }
   return uid;
 }
-
-// 获得sid
-// TODO: 单页面
-// function getSid() {
-//   const date = new Date();
-//   let sid = sessionStorage.getItem('bombay_sid') || '';
-//   if (!sid) {
-//       sid = randomString();
-//       sessionStorage.setItem('bombay_sid', sid);
-//   }
-//   return sid;
-// }
 
 // 获取浏览器默认语言
 function getLang() {

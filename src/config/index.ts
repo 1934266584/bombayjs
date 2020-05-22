@@ -24,6 +24,8 @@ export let Config = {
   isError: true,
   // 是否录屏
   isRecord: true,
+  // 是否记录停留时长
+  isCountStayTime: true,
   // 是否上报行为
   isBehavior: true,
   ignore: {
@@ -43,6 +45,10 @@ export let Config = {
   Vue: '',
   // 用户信息
   user: {},
+  // 定义用户多少毫秒不操作认为不在线 (默认10分钟)
+  offlineTime: 10 * 60 * 1000,
+  // 多少时间上传一次用户停留
+  sendMill: 30 * 1000,
 };
 
 // 设置参数

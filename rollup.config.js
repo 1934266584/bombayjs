@@ -4,6 +4,8 @@ import resolve from 'rollup-plugin-node-resolve'; // 告诉 Rollup 如何查找�
 import typescript from 'rollup-plugin-typescript2'; // 编译typescript
 import { terser } from 'rollup-plugin-terser'; // 压缩输出用
 import replace from 'rollup-plugin-replace'; // 编译时替换对应的字段
+import json from '@rollup/plugin-json'; // 读取json信息的
+import commonjs from 'rollup-plugin-commonjs';
 
 const useTypescript = true; // 是否使用typescript 默认为false
 
@@ -60,6 +62,12 @@ function getConfig({ outFile, format, mode }) {
       name: format === 'umd' ? 'bombay' : undefined,
     },
     plugins: [
+      commonjs({
+        // non-CommonJS modules will be ignored, but you can also
+        // specifically include/exclude files
+        include: 'node_modules/**', // Default: undefined
+      }),
+      json(),
       useTypescript &&
         typescript({
           typescript: require('typescript'),

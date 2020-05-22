@@ -14,6 +14,8 @@ import {
   handleMsg,
   handleHealth,
   handleApi,
+  handleStayTime,
+  handleCustomizeReport,
   setPage,
   listenMessageListener,
   listenCircleListener,
@@ -31,7 +33,7 @@ export default class Bombay {
   init({ Vue, ...options }) {
     // 没有token,则不监听任何事件
     if (options && !options.token) {
-      console.warn('请输入一个token');
+      throw Error('请输入一个token');
       return;
     }
 
@@ -62,6 +64,14 @@ export default class Bombay {
     if (GlobalVal.circle) {
       listenCircleListener();
     }
+  }
+
+  handleCustomizeReport(customizeMessage) {
+    // 没有token,则不监听任何事件
+    if (!Config.token) {
+      throw Error('请输入一个合法token');
+    }
+    handleCustomizeReport(customizeMessage);
   }
 
   // 只支持更改用户的信息, 当获取到用户信息后，传入
@@ -96,6 +106,11 @@ export default class Bombay {
   addListenClick() {
     on('click', handleClick); // 非输入框点击，会过滤掉点击输入框
     on('blur', handleBlur); // 输入框失焦
+
+    if (Config.isCountStayTime) {
+      on('click', handleStayTime); // 非输入框点击，会过滤掉点击输入框
+      on('blur', handleStayTime); // 输入框失焦
+    }
   }
 
   // 监听路由

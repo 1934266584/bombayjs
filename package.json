@@ -1,6 +1,6 @@
 {
   "name": "@zvalley/bombay",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "前端错误、性能、行为、PV采集库，不依赖于任何框架",
   "keywords": [
     "error",
@@ -31,12 +31,14 @@
     "release": "bash scripts/release.sh"
   },
   "devDependencies": {
+    "@rollup/plugin-json": "^4.0.3",
     "@types/node": "^12.0.2",
     "cross-env": "^5.2.0",
     "husky": "^2.7.0",
     "lint-staged": "^8.2.1",
     "prettier": "^1.18.2",
     "rollup": "^1.12.0",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-terser": "^4.0.4",
@@ -44,7 +46,8 @@
     "typescript": "^3.6.2"
   },
   "dependencies": {
-    "tslib": "^1.9.3"
+    "tslib": "^1.9.3",
+    "ua-device": "^0.1.10"
   },
   "husky": {
     "hooks": {

@@ -710,3 +710,39 @@ function handleMessage(event) {
     window.history.forward();
   }
 }
+
+// 监听用户的时长
+// 用户在线时长统计
+export function handleStayTime() {
+  const SEND_MILL = Config.sendMill;
+  const now = Date.now();
+  const duration = now - GlobalVal.lastTime;
+
+  if (duration > Config.offlineTime) {
+    GlobalVal.lastTime = Date.now();
+  } else if (duration > SEND_MILL) {
+    GlobalVal.lastTime = Date.now();
+    let commonMsg = getCommonMsg();
+    let msg: durationMsg = {
+      ...commonMsg,
+      ...{
+        t: 'duration',
+        duration_ms: duration,
+      },
+    };
+    report(msg);
+  }
+}
+
+// 用户自定义上传事件
+export function handleCustomizeReport(customizeMessage) {
+  if (!customizeMessage.t) {
+    throw Error('行为类型不能为空');
+  }
+  let commonMsg = getCommonMsg();
+  let msg = {
+    ...commonMsg,
+    ...customizeMessage,
+  };
+  report(msg);
+}
