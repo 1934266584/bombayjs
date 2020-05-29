@@ -61,6 +61,7 @@ interface CommonMsg {
   deviceEngine: string; // 设备的浏览器引擎
   deviceOs: string; // 设备的操作系统
   user: string; // 当前用户
+  needPushtoKafaka: boolean; // 是否需要推送到kafaka系统
 }
 // 时长切片上传
 interface durationMsg extends CommonMsg {

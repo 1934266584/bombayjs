@@ -97,7 +97,9 @@ new Bombay({
   // 最长上报数据长度
   maxLength: 1000,
   // 当前用户信息
-  user: {}
+  user: {},
+  // 是否需要推送消息到kafaka
+  needPushtoKafaka: false
 }
 
 ```

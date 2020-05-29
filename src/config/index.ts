@@ -49,6 +49,8 @@ export let Config = {
   offlineTime: 10 * 60 * 1000,
   // 多少时间上传一次用户停留
   sendMill: 30 * 1000,
+  // 是否需要推送相关信息到java后台的kafaka
+  needPushtoKafaka: false,
 };
 
 // 设置参数
