@@ -102,6 +102,27 @@ new Bombay({
 
 ```
 
+### 设置用户信息
+通过调用Bombay实例化后的setUserInfo函数来设置用户的相关信息
+
+### 监听vue的errorHandler错误
+在实例化Bombay时传入Vue对象即可监听
+```
+new Bombay({
+  token: 'wnrnhkh1585620953820',
+  reportUrl: 'http://127.0.0.1:7002/api/v1/report/web',
+  user: {
+    userId: '333333'
+  },
+  Vue: Vue
+})
+```
+
+### 上传自定义行为
+通过调用实例化的Bombay的handleCustomizeReport函数即可上传，注意参数t为必传字段，表示的是类型，目前只有传t=app.click才可以透传到java后台中的kafaka
+
+
+
 ## notice 
 目前解析userAgent用的是一个老版本的库ua-device,下载下来的依赖源码又一个问题，打包的时候需要修改一下ua-device的lib文件下useragent-base.js中的detect函数第一行增加一个var match
 
