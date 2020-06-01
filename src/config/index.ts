@@ -55,9 +55,14 @@ export let Config = {
 
 // 设置参数
 export function setConfig(options) {
+  const ignore = {
+    ...Config.ignore,
+    ...options.ignore,
+  };
   Config = {
     ...Config,
     ...options,
+    ignore,
   };
 }
 
