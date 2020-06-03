@@ -1,5 +1,4 @@
 import { randomString } from '../utils/tools';
-import { insertCss, removeCss } from '../handlers';
 
 // 默认参数
 export let GlobalVal = {

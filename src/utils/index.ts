@@ -4,6 +4,7 @@ import { GlobalVal } from '../config/global';
 import { version } from '../../package.json';
 import UA from 'ua-device';
 
+// 获取公共的上传参数
 export function getCommonMsg() {
   const device = getDeviceString();
 
@@ -75,6 +76,7 @@ function getLang() {
   return lang;
 }
 
+// 获取浏览器的屏幕宽度
 function getScreen() {
   let w = document.documentElement.clientWidth || document.body.clientWidth;
   let h = document.documentElement.clientHeight || document.body.clientHeight;

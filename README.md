@@ -123,6 +123,28 @@ new Bombay({
 ### 上传自定义行为
 通过调用实例化的Bombay的handleCustomizeReport函数即可上传，注意参数t为必传字段，表示的是类型，目前只有传t=app.click才可以透传到java后台中的kafaka
 
+目前定义的几个类型分别为
+```
+  bombayInstance.handleCustomizeReport({
+    t: 'app.click',
+    moduleName: 'help-center',
+    clickId: '77777777777'
+  })
+
+  bombayInstance.handleCustomizeReport({
+    t: 'searchBehaivor',
+    searchValue: '哈哈哈',
+    searchType: '2'
+  })
+
+  bombayInstance.handleCustomizeReport({
+    t: 'collectBehaivor',
+    moduleName: 'help-center',
+    clickId: '77777777777'
+  })
+
+```
+
 
 
 ## notice 

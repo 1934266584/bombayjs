@@ -2,7 +2,7 @@ import { parseUrl, fnToString, warn, dispatchCustomEvent, on, parseHash } from '
 import { handleBehavior, handleApi, setPage } from './handlers';
 import { Config } from './config';
 
-// hack console
+// 劫持console方法
 // "debug", "info", "warn", "log", "error"
 export function hackConsole() {
   if (window && window.console) {
@@ -67,6 +67,7 @@ export function hackhook() {
   hackAjax();
 }
 
+// 劫持fetch网络请求
 function hackFetch() {
   if ('function' == typeof window.fetch) {
     var __oFetch_ = window.fetch;
@@ -157,6 +158,7 @@ function hackAjax() {
   }
 }
 
+// 监听history的栈的改变
 export function hackOnpopstate() {
   window['__bb_onpopstate_'] = window.onpopstate;
 

@@ -1,7 +1,5 @@
 import { Config, getConfig } from './config';
 import {
-  queryString,
-  serialize,
   each,
   parseHash,
   warn,
@@ -11,7 +9,6 @@ import {
   isInIframe,
   findIndex,
   checkEdge,
-  isTypeOf,
 } from './utils/tools';
 import { getCommonMsg } from './utils/index';
 import { report } from './reporter';
@@ -84,6 +81,7 @@ const getElmPath = function(e) {
   return ret.reverse().join(' > ');
 };
 
+// 点击事件的监听
 export function handleClick(event) {
   // 正在圈选
   if (GlobalVal.circle) {
@@ -139,6 +137,7 @@ export function handleClick(event) {
   }
 }
 
+// 监听输入框的失焦事件
 export function handleBlur(event) {
   var target;
   try {
@@ -170,6 +169,7 @@ export function handleBlur(event) {
   report(msg);
 }
 
+// 用户行为上报
 export function handleBehavior(behavior: Behavior): void {
   let commonMsg = getCommonMsg();
   let msg: behaviorMsg = {
@@ -331,6 +331,7 @@ export function handleNavigation(page): void {
   report(msg);
 }
 
+// 设置页面，是否是第一次
 export function setPage(page, isFirst?: boolean) {
   if (!isFirst && GlobalVal.page === page && GlobalVal.sBegin > Date.now() - 100) {
     return;
@@ -352,6 +353,7 @@ export function setPage(page, isFirst?: boolean) {
   handlePv();
 }
 
+// 页面的简况状态值的变化
 export function handleHealth() {
   let healthy = GlobalVal._health.errcount ? 0 : 1;
   let commonMsg = getCommonMsg();
@@ -367,6 +369,7 @@ export function handleHealth() {
   resetGlobalHealth();
   report(ret);
 }
+
 // 处理Vue抛出的错误
 export function handleVueErr(error, vm, info): void {
   let commonMsg = getCommonMsg();
@@ -398,9 +401,6 @@ export function handleErr(error): void {
     case 'unhandledrejection':
       reportPromiseError(error);
       break;
-    // case 'httpError':
-    //     reportHttpError(error)
-    //   break;
   }
   setGlobalHealth('error');
 }
@@ -461,28 +461,7 @@ function reportPromiseError(error: any): void {
   report(msg);
 }
 
-function reportHttpError(msg: CommonMsg, data: any): void {
-  // msg.records = [
-  //     {
-  //         type:'httpError',
-  //         data:{
-  //             occurTime:new Date().getTime(),
-  //             title:document.title,
-  //             url:window.location.href,
-  //             userAgent:window.navigator.userAgent,
-  //             method:data.method ? data.method : 'GET',
-  //             status:data.status,
-  //             statusText:data.statusText,
-  //             response:data.response,
-  //             requestUrl:data.url || data.requestUrl
-  //         }
-  //     }
-  // ]
-  // console.log(msg)
-  // // console.log('httpError :' + queryString(msg))
-  // new Image().src = `${Config.reportUrl}?commit=${queryString(msg)}`
-}
-
+// 处理资源的错误
 export function handleResource() {
   var performance = window.performance;
   if (
@@ -559,6 +538,7 @@ export function handleResource() {
   report(msg);
 }
 
+// 监听接口的错误
 export function handleApi(url, success, time, code, msg, beigin) {
   if (!url) {
     warn('[retcode] api is null');
@@ -586,6 +566,7 @@ export function handleApi(url, success, time, code, msg, beigin) {
   report(apiMsg);
 }
 
+// 统计总量,每次都要传数值过来
 export function handleSum(key: string, val: number = 1) {
   let commonMsg = getCommonMsg();
   let g = splitGroup(key);
@@ -600,6 +581,7 @@ export function handleSum(key: string, val: number = 1) {
   report(ret);
 }
 
+// 统计平均值
 export function handleAvg(key: string, val: number = 1) {
   let commonMsg = getCommonMsg();
   let g = splitGroup(key);
@@ -614,6 +596,7 @@ export function handleAvg(key: string, val: number = 1) {
   report(ret);
 }
 
+// 上传记录消息
 export function handleMsg(key: string) {
   let commonMsg = getCommonMsg();
   let g = splitGroup(key);
@@ -628,20 +611,7 @@ export function handleMsg(key: string) {
   report(ret);
 }
 
-// export function handlePercent(key: string, val: number = 1) {
-//   let commonMsg = getCommonMsg()
-//   let g = splitGroup(key)
-//   let ret: sumMsg = {
-//     ...commonMsg,
-//     ...g,
-//     ...{
-//       t: 'avg',
-//       val,
-//     }
-//   }
-//   report(ret)
-// }
-
+// hover事件
 export function handleHover(e) {
   var cls = document.getElementsByClassName(CIRCLECLS);
   if (cls.length > 0) {
@@ -652,6 +622,7 @@ export function handleHover(e) {
   e.target.className += ` ${CIRCLECLS}`;
 }
 
+// 注入css
 export function insertCss() {
   var content = `.${CIRCLECLS}{border: #ff0000 2px solid;}`;
   var style = document.createElement('style');
@@ -666,11 +637,13 @@ export function insertCss() {
   head.appendChild(style);
 }
 
+// 移除css
 export function removeCss() {
   var style = document.getElementById(CIRCLESTYLEID);
   style.parentNode.removeChild(style);
 }
 
+// 监听圈选
 export function listenCircleListener() {
   insertCss();
   GlobalVal.cssInserted = true;
@@ -678,6 +651,7 @@ export function listenCircleListener() {
   on('mouseover', handleHover);
 }
 
+// 移除圈选
 export function removeCircleListener() {
   removeCss();
   GlobalVal.cssInserted = false;
@@ -690,7 +664,7 @@ export function listenMessageListener() {
 }
 
 /**
- *
+ *  监听iframe中的postmessage事件
  * @param {*} event {t: '', v: ''}
  *  t: type
  *  v: value
