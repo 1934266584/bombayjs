@@ -74,7 +74,9 @@ const getElmPath = function(e) {
   var ret = [],
     deepLength = 0, // 层数，最多5层
     elm = ''; // 元素
-  ret.push(`(${e.innerText.substr(0, 50)})`);
+  if (e.innerText) {
+    ret.push(`(${e.innerText.substr(0, 50)})`);
+  }
   for (var t = e || null; t && deepLength++ < 5 && !('html' === (elm = normalTarget(t))); ) {
     ret.push(elm), (t = t.parentNode);
   }
