@@ -56,6 +56,10 @@ new Bombay({
 {
   // 上报地址
   reportUrl: 'http://localhost:10000',
+  // 批量上报地址 当配置了这个字段的时候，会将用户行为集成加载
+  reportUrlMultiple: '',
+  // 最长缓存长度
+  maxCacheLength: 20,
   // 提交参数
   token: '',
   // app版本
