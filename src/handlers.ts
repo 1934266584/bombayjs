@@ -135,7 +135,18 @@ export function handleClick(event) {
         behavior,
       },
     };
-    report(msg);
+    if (Config.reportUrlMultiple) {
+      GlobalVal.reportCache.push(msg);
+      localStorage.setItem('bombay-cache', JSON.stringify(GlobalVal.reportCache));
+      if (GlobalVal.reportCache.length >= Config.maxCacheLength) {
+        const reportCache = JSON.parse(JSON.stringify(GlobalVal.reportCache));
+        report(reportCache);
+        GlobalVal.reportCache = [];
+        localStorage.removeItem('bombay-cache');
+      }
+    } else {
+      report(msg);
+    }
   }
 }
 

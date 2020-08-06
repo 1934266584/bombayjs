@@ -1,5 +1,7 @@
 import { randomString } from '../utils/tools';
-
+const cache = localStorage.getItem('bombay-cache')
+  ? JSON.parse(localStorage.getItem('bombay-cache'))
+  : [];
 // 默认参数
 export let GlobalVal = {
   lastTime: Date.now(), // 上一个记录时间
@@ -12,6 +14,7 @@ export let GlobalVal = {
     apifail: 0,
   },
   circle: false,
+  reportCache: cache,
   cssInserted: false,
 };
 

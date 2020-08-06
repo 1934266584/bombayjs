@@ -23,6 +23,8 @@ type ReportData =
   | msgMsg
   | durationMsg;
 
+type ReportDataList = ReportData[];
+
 type MsgType =
   | ''
   | 'error'
