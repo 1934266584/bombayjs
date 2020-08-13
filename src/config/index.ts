@@ -38,6 +38,7 @@ export let Config = {
     ignorePvs: ['404'],
     ignoreResources: [],
     ignoreApis: ['/api/v1/report/web', 'livereload.js?snipver=1', '/sockjs-node/info'],
+    ignoreBehaviorEles: [],
   },
   behavior: {
     console: ['log', 'error'], // 取值可以是"debug", "info", "warn", "log", "error"

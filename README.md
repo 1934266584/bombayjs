@@ -87,12 +87,17 @@ new Bombay({
   // 是否上报行为
   isBehavior: true,
   ignore: {
+    // 忽略错误
     ignoreErrors: [],
+    // 忽略地址相关
     ignoreUrls: [],
     ignorePvs: ['404'],
     // 忽略资源请求
     ignoreResources: [],
+    // 忽略接口请求
     ignoreApis: ['/api/v1/report/web', 'livereload.js?snipver=1', '/sockjs-node/info'],
+    // 忽略用户行为元素
+    ignoreBehaviorEles: []
   },
   behavior: {
     console: ['log', 'error'], // 取值可以是"debug", "info", "warn", "log", "error"

@@ -126,7 +126,11 @@ export function handleClick(event) {
       },
     };
     // 空信息不上报
-    if (!behavior.data.path) return;
+    const haveIgnoreEle = Config.ignore.ignoreBehaviorEles.some(ele =>
+      behavior.data.path.includes(ele)
+    );
+
+    if (!behavior.data.path || haveIgnoreEle) return;
     let commonMsg = getCommonMsg();
     let msg: behaviorMsg = {
       ...commonMsg,
@@ -170,7 +174,11 @@ export function handleBlur(event) {
     },
   };
   // 空信息不上报
-  if (!behavior.data.path || !behavior.data.message) return;
+  const haveIgnoreEle = Config.ignore.ignoreBehaviorEles.some(ele =>
+    behavior.data.path.includes(ele)
+  );
+
+  if (!behavior.data.path || !behavior.data.message || haveIgnoreEle) return;
   let commonMsg = getCommonMsg();
   let msg: behaviorMsg = {
     ...commonMsg,
