@@ -160,3 +160,5 @@ new Bombay({
 目前解析userAgent用的是一个老版本的库ua-device,下载下来的依赖源码又一个问题，打包的时候需要修改一下ua-device的lib文件下useragent-base.js中的detect函数第一行增加一个var match
 
 ![avatar](/example/fix.png)
+
+图片加载失败之后循环调用的问题是因为vconsole的原因造成的
